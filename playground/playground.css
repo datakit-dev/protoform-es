@@ -1,0 +1,71 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.shell {
+  min-height: 100vh;
+  color-scheme: light dark;
+  background: light-dark(#ffffff, #0f0f11);
+  color: light-dark(#18181b, #f4f4f5);
+}
+
+.shell[data-theme="light"] {
+  color-scheme: light;
+}
+
+.shell[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid light-dark(#e4e4e7, #27272a);
+  font-size: 0.875rem;
+}
+
+.toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.message-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.5rem;
+}
+
+.output {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  margin: 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: light-dark(#f4f4f5, #18181b);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

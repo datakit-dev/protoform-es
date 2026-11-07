@@ -1,0 +1,393 @@
+/*
+ * Prebuilt styles for the Tailwind kit (`@dtkt/protoform/kit/tailwind`).
+ *
+ * - No global resets: only `.pf-*` classes are emitted, inside the
+ *   `protoform` cascade layer, so any unlayered CSS of yours wins.
+ * - Theme with the `--pf-*` custom properties below. Their defaults live on
+ *   `:root`, so you can override them on the form or any ancestor. Dark mode
+ *   follows `prefers-color-scheme`; force it with `.dark` / `[data-theme="dark"]`
+ *   (or `.light` / `[data-theme="light"]`) on the form or any ancestor.
+ */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@layer protoform {
+  /* Defaults sit on :root (not on the form) so ancestors can override them. */
+  :root {
+    --pf-fg: light-dark(#18181b, #f4f4f5);
+    --pf-muted: light-dark(#52525b, #a1a1aa);
+    --pf-surface: light-dark(#fafafa, #202023);
+    --pf-input-bg: light-dark(#ffffff, #27272a);
+    --pf-border: light-dark(#d4d4d8, #3f3f46);
+    --pf-border-strong: light-dark(#a1a1aa, #71717a);
+    --pf-accent: light-dark(#4f46e5, #818cf8);
+    --pf-accent-fg: light-dark(#ffffff, #0b0b0f);
+    --pf-ring: light-dark(#6366f1, #a5b4fc);
+    --pf-danger: light-dark(#dc2626, #f87171);
+    --pf-danger-bg: light-dark(#fef2f2, #2a1517);
+    --pf-radius: 0.375rem;
+    --pf-font: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+
+  .pf-form,
+  .pf-theme {
+    color-scheme: light dark;
+    color: var(--pf-fg);
+    font-family: var(--pf-font);
+  }
+
+  :where([data-theme="light"], .light) :is(.pf-form, .pf-theme),
+  :is(.pf-form, .pf-theme):where([data-theme="light"], .light) {
+    color-scheme: light;
+  }
+
+  :where([data-theme="dark"], .dark) :is(.pf-form, .pf-theme),
+  :is(.pf-form, .pf-theme):where([data-theme="dark"], .dark) {
+    color-scheme: dark;
+  }
+
+  .pf-form {
+    @apply text-sm leading-6;
+  }
+
+  /* Layout */
+  .pf-stack {
+    @apply flex flex-col gap-4;
+  }
+
+  .pf-row {
+    @apply flex items-center gap-2;
+
+    /* Multi-line editors (JSON, textareas) keep their actions at the top */
+    &:has(textarea) {
+      @apply items-start;
+    }
+  }
+
+  .pf-row-content {
+    @apply flex min-w-0 flex-1 gap-2;
+  }
+
+  .pf-row-content > * {
+    @apply min-w-0 flex-1;
+  }
+
+  /* The "=" between a map key and its value */
+  .pf-row-content > [data-pf="separator"] {
+    @apply flex-none self-center font-mono text-(--pf-muted);
+  }
+
+  .pf-row-actions {
+    @apply flex min-w-10 shrink-0 items-center justify-end gap-1;
+  }
+
+  /* Field frame */
+  .pf-field {
+    @apply flex flex-col gap-1.5;
+  }
+
+  .pf-field-body {
+    @apply gap-1.5;
+  }
+
+  .pf-label {
+    @apply font-medium;
+  }
+
+  .pf-required {
+    color: var(--pf-danger);
+  }
+
+  .pf-description {
+    @apply m-0 text-xs text-(--pf-muted);
+  }
+
+  .pf-errors {
+    @apply m-0 list-none p-0 text-xs text-(--pf-danger);
+  }
+
+  .pf-form [data-pf="empty"] {
+    @apply m-0 text-xs text-(--pf-muted) italic;
+  }
+
+  .pf-form [data-pf="actions"] {
+    @apply mt-6 flex items-center gap-2;
+  }
+
+  .pf-form [data-pf="form-errors"] {
+    @apply mb-4 list-none rounded-(--pf-radius) border border-(--pf-danger) bg-(--pf-danger-bg) p-3 text-(--pf-danger);
+  }
+
+  /* Text controls */
+  .pf-input,
+  .pf-textarea,
+  .pf-select,
+  .pf-file-input {
+    font: inherit;
+    @apply box-border block w-full rounded-(--pf-radius) border border-(--pf-border) bg-(--pf-input-bg) px-3 py-2 text-(--pf-fg) shadow-xs outline-none transition-colors;
+
+    &:hover {
+      @apply border-(--pf-border-strong);
+    }
+
+    &[data-focus],
+    &:focus-visible {
+      @apply border-(--pf-ring) ring-2 ring-(--pf-ring)/40;
+    }
+
+    &[data-invalid],
+    &[aria-invalid="true"] {
+      @apply border-(--pf-danger);
+    }
+
+    &[data-invalid][data-focus],
+    &[aria-invalid="true"]:focus-visible {
+      @apply ring-(--pf-danger)/40;
+    }
+
+    &:disabled,
+    &[data-disabled] {
+      @apply cursor-not-allowed opacity-60;
+    }
+
+    &:read-only:not(select, [type="file"]) {
+      @apply bg-(--pf-surface);
+    }
+
+    &[data-mono] {
+      @apply font-mono text-[0.8125rem];
+    }
+
+    &::placeholder {
+      @apply text-(--pf-muted) opacity-70;
+    }
+  }
+
+  .pf-textarea {
+    @apply min-h-20 resize-y;
+  }
+
+  .pf-select-wrap {
+    @apply relative;
+  }
+
+  .pf-select {
+    @apply appearance-none pr-9;
+  }
+
+  .pf-chevron {
+    @apply size-4 text-(--pf-muted);
+  }
+
+  .pf-select-wrap > .pf-chevron {
+    @apply pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2;
+  }
+
+  /* Switch, checkbox, radio */
+  .pf-switch {
+    @apply relative box-border inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-0 bg-(--pf-border-strong) p-0 outline-none transition-colors;
+
+    &[data-checked] {
+      @apply bg-(--pf-accent);
+    }
+
+    &[data-focus] {
+      @apply ring-2 ring-(--pf-ring)/60 ring-offset-2;
+    }
+
+    &[data-invalid] {
+      @apply ring-2 ring-(--pf-danger)/60;
+    }
+
+    &[data-disabled] {
+      @apply cursor-not-allowed opacity-60;
+    }
+  }
+
+  .pf-switch-thumb {
+    @apply inline-block size-5 translate-x-0.5 rounded-full bg-white shadow transition-transform;
+  }
+
+  .pf-switch[data-checked] .pf-switch-thumb {
+    @apply translate-x-5.5;
+  }
+
+  .pf-checkbox {
+    @apply flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-sm border border-(--pf-border-strong) bg-(--pf-input-bg) text-(--pf-accent-fg) outline-none transition-colors;
+
+    &[data-checked] {
+      @apply border-(--pf-accent) bg-(--pf-accent);
+    }
+
+    &[data-focus] {
+      @apply ring-2 ring-(--pf-ring)/60 ring-offset-2;
+    }
+
+    &[data-invalid] {
+      @apply border-(--pf-danger);
+    }
+
+    &[data-disabled] {
+      @apply cursor-not-allowed opacity-60;
+    }
+  }
+
+  .pf-checkbox-mark {
+    @apply size-3.5 opacity-0;
+  }
+
+  .pf-checkbox[data-checked] .pf-checkbox-mark {
+    @apply opacity-100;
+  }
+
+  .pf-check-label,
+  .pf-radio-option {
+    @apply inline-flex items-center gap-2;
+  }
+
+  .pf-radiogroup {
+    @apply flex flex-wrap gap-x-5 gap-y-2;
+  }
+
+  .pf-radio {
+    @apply flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-full border border-(--pf-border-strong) bg-(--pf-input-bg) outline-none transition-colors;
+
+    &[data-checked] {
+      @apply border-(--pf-accent);
+    }
+
+    &[data-focus] {
+      @apply ring-2 ring-(--pf-ring)/60 ring-offset-2;
+    }
+
+    &[data-disabled] {
+      @apply cursor-not-allowed opacity-60;
+    }
+  }
+
+  .pf-radio-dot {
+    @apply size-2.5 scale-0 rounded-full bg-(--pf-accent) transition-transform;
+  }
+
+  .pf-radio[data-checked] .pf-radio-dot {
+    @apply scale-100;
+  }
+
+  /* File input: the native control, framed like the text inputs */
+  .pf-file-input {
+    @apply cursor-pointer p-1.5 text-(--pf-muted) file:mr-3 file:cursor-pointer file:rounded-sm file:border file:border-(--pf-border) file:bg-(--pf-surface) file:px-3 file:py-1 file:font-medium file:text-(--pf-fg);
+    font-size: inherit;
+
+    &::file-selector-button {
+      font: inherit;
+      font-weight: 500;
+    }
+
+    &:disabled,
+    &:disabled::file-selector-button {
+      @apply cursor-not-allowed;
+    }
+  }
+
+  /* Buttons */
+  .pf-button {
+    font: inherit;
+    @apply box-border inline-flex cursor-pointer items-center justify-center gap-1 rounded-(--pf-radius) border border-transparent bg-transparent px-3 py-1.5 font-medium outline-none transition-colors;
+
+    &[data-size="sm"] {
+      @apply px-2 py-1 text-xs;
+    }
+
+    &[data-focus] {
+      @apply ring-2 ring-(--pf-ring)/60 ring-offset-1;
+    }
+
+    &:disabled,
+    &[data-disabled] {
+      @apply cursor-not-allowed opacity-50;
+    }
+
+    &[data-variant="primary"] {
+      @apply bg-(--pf-accent) text-(--pf-accent-fg);
+    }
+
+    &[data-variant="primary"]:not(:disabled):hover {
+      @apply opacity-90;
+    }
+
+    &[data-variant="secondary"] {
+      @apply border-(--pf-border) bg-(--pf-input-bg) text-(--pf-fg);
+    }
+
+    &[data-variant="secondary"]:not(:disabled):hover {
+      @apply bg-(--pf-surface);
+    }
+
+    &[data-variant="danger"] {
+      @apply bg-(--pf-danger) text-white;
+    }
+
+    &[data-variant="ghost"] {
+      @apply text-(--pf-muted);
+    }
+
+    &[data-variant="ghost"]:not(:disabled):hover {
+      @apply bg-(--pf-surface) text-(--pf-fg);
+    }
+  }
+
+  /* Sections: no box; the content sits behind a subtle left rail that shows hierarchy */
+  .pf-section {
+    @apply m-0 box-border flex min-w-0 flex-col gap-2;
+
+    /* A hairline keeps a section header from reading as part of the field above it */
+    &:not(:first-child),
+    & + .pf-field {
+      @apply border-0 border-t border-solid border-(--pf-border) pt-4;
+    }
+  }
+
+  .pf-section-header {
+    @apply flex items-center justify-between gap-2;
+  }
+
+  .pf-section-title {
+    @apply font-medium;
+  }
+
+  .pf-section-actions {
+    @apply flex items-center gap-1;
+  }
+
+  .pf-section-toggle {
+    font: inherit;
+    @apply inline-flex cursor-pointer items-center gap-1.5 rounded-sm border-0 bg-transparent p-0 text-(--pf-fg) outline-none;
+
+    &[data-focus] {
+      @apply ring-2 ring-(--pf-ring)/60 ring-offset-2;
+    }
+
+    .pf-chevron {
+      @apply -rotate-90 transition-transform;
+    }
+
+    &[data-open] .pf-chevron {
+      @apply rotate-0;
+    }
+  }
+
+  /* The rail: every field and section keeps its content behind a subtle left border */
+  .pf-section-body,
+  .pf-field-body {
+    @apply box-border flex flex-col border-0 border-l-2 border-solid border-(--pf-border) pl-4;
+  }
+
+  .pf-section-body {
+    @apply gap-4;
+  }
+
+  /* Inside a section the section's rail already applies, so fields don't add a second one */
+  .pf-section-body .pf-field-body {
+    @apply border-l-0 pl-0;
+  }
+}
