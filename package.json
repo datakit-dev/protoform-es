@@ -131,6 +131,9 @@
       ],
       "kit/tailwind": [
         "./dist/kit/tailwind/index.d.ts"
+      ],
+      "gen/*.js": [
+        "./dist/gen/*.d.ts"
       ]
     }
   },

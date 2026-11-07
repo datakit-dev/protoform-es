@@ -28,7 +28,7 @@ stay current as the user edits (`validateOn="change"` shows them from the first 
 ## Install
 
 ```sh
-npm install @dtkt/protoform react react-dom
+npm install @dtkt/protoform @bufbuild/protobuf @bufbuild/protovalidate react react-dom
 npm install @headlessui/react   # only if you use the Tailwind kit
 ```
 
@@ -58,6 +58,22 @@ export default defineConfig({
 
 Regular installs from a registry or a packed tarball (`npm pack`) don't need this, but your
 app must still install `@headlessui/react` for the Tailwind kit.
+
+## Annotations
+
+Protoform works with any generated protobuf type; annotations only refine the defaults.
+The `dtkt.protoform.v1beta1` annotation schema ships with this package (like
+`@bufbuild/protovalidate/gen` does for `buf.validate`), so your own generated code can
+use it without depending on `@dtkt/sdk`. With `buf.gen.yaml`:
+
+```yaml
+- remote: buf.build/bufbuild/es
+  opt:
+    - map_imports=dtkt/protoform/:@dtkt/protoform/gen
+```
+
+`@bufbuild/protobuf` and `@bufbuild/protovalidate` are peer dependencies so your generated
+code, protovalidate and Protoform share a single copy.
 
 ## What each type renders
 
@@ -192,6 +208,7 @@ npm test               # vitest (jsdom), single run
 npm run test:watch     # vitest in watch mode
 npm run test:coverage  # coverage report (v8) in the terminal and ./coverage
 npm run lint           # eslint
+npm run gen            # regenerate lib/gen (annotation schemas) from buf.build/datakit-dev/dtkt-sdk
 npm run build          # tsc, library (vite), then dist/styles.css (tailwind CLI)
 ```
 
