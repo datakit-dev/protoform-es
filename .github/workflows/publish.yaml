@@ -1,0 +1,36 @@
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write # npm trusted publishing (OIDC) and provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      # Trusted publishing requires npm >= 11.5.1; staged publishing requires npm >= 11.15.0
+      - run: npm install -g npm@latest
+
+      - run: npm ci
+
+      - name: Verify tag matches package version
+        run: test "v$(node -p "require('./package.json').version")" = "${{ github.event.release.tag_name }}"
+
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      # Stages the release; a maintainer approves it with 2FA via `npm stage approve` or npmjs.com
+      - run: npm stage publish

@@ -33,6 +33,9 @@ export default defineConfig({
         'providers/index': resolve(import.meta.dirname, 'lib/providers/index.ts'),
         'kit/index': resolve(import.meta.dirname, 'lib/kit/index.ts'),
         'kit/tailwind/index': resolve(import.meta.dirname, 'lib/kit/tailwind/index.tsx'),
+        // Annotation schemas, importable by user-generated code via `map_imports=dtkt/protoform/:@dtkt/protoform/gen`
+        'gen/dtkt/protoform/v1beta1/protoform_pb': resolve(import.meta.dirname, 'lib/gen/dtkt/protoform/v1beta1/protoform_pb.js'),
+        'gen/google/api/field_behavior_pb': resolve(import.meta.dirname, 'lib/gen/google/api/field_behavior_pb.js'),
       },
       // UMD/IIFE can't be built from multiple entries
       formats: ['es'],
