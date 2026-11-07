@@ -12,12 +12,12 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
-          cache: npm
+          package-manager-cache: false # never cache in release builds
           registry-url: https://registry.npmjs.org
 
       # Trusted publishing requires npm >= 11.5.1; staged publishing requires npm >= 11.15.0
