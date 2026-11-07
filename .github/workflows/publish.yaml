@@ -6,7 +6,7 @@ on:
 
 permissions:
   contents: read
-  id-token: write # npm provenance
+  id-token: write # npm trusted publishing (OIDC) and provenance
 
 jobs:
   publish:
@@ -20,6 +20,9 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
 
+      # Trusted publishing requires npm >= 11.5.1
+      - run: npm install -g npm@latest
+
       - run: npm ci
 
       - name: Verify tag matches package version
@@ -27,5 +30,3 @@ jobs:
 
       # prepublishOnly runs lint, test and build
       - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

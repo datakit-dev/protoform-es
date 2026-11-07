@@ -2,6 +2,7 @@
   "name": "@dtkt/protoform",
   "version": "0.1.0",
   "description": "DataKit Protoform",
+  "license": "Apache-2.0",
   "keywords": [
     "datakit",
     "dtkt",
