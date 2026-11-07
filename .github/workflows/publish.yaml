@@ -20,7 +20,7 @@ jobs:
           cache: npm
           registry-url: https://registry.npmjs.org
 
-      # Trusted publishing requires npm >= 11.5.1
+      # Trusted publishing requires npm >= 11.5.1; staged publishing requires npm >= 11.15.0
       - run: npm install -g npm@latest
 
       - run: npm ci
@@ -29,4 +29,5 @@ jobs:
         run: test "v$(node -p "require('./package.json').version")" = "${{ github.event.release.tag_name }}"
 
       # prepublishOnly runs lint, test and build
-      - run: npm publish
+      # Stages the release; a maintainer approves it with 2FA via `npm stage approve` or npmjs.com
+      - run: npm stage publish
