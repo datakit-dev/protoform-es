@@ -28,6 +28,9 @@ jobs:
       - name: Verify tag matches package version
         run: test "v$(node -p "require('./package.json').version")" = "${{ github.event.release.tag_name }}"
 
-      # prepublishOnly runs lint, test and build
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
       # Stages the release; a maintainer approves it with 2FA via `npm stage approve` or npmjs.com
       - run: npm stage publish
