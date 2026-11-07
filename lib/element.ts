@@ -1,8 +1,8 @@
 import { create, type DescField, type DescOneof, getOption, hasOption, ScalarType } from "@bufbuild/protobuf";
 
-import { field as fieldExt, type FieldElement, FieldElementSchema } from "@buf/datakit-dev_dtkt-sdk.bufbuild_es/dtkt/protoform/v1beta1/protoform_pb";
+import { field as fieldExt, type FieldElement, FieldElementSchema } from "./gen/dtkt/protoform/v1beta1/protoform_pb";
 import { field as validateField } from "@bufbuild/protovalidate/gen/buf/validate/validate_pb.js";
-import { FieldBehavior, field_behavior as fieldBehaviorExt } from "@buf/googleapis_googleapis.bufbuild_es/google/api/field_behavior_pb";
+import { FieldBehavior, field_behavior as fieldBehaviorExt } from "./gen/google/api/field_behavior_pb";
 import { type Commentable, getComments } from "./comments";
 
 export class Element {

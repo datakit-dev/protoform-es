@@ -1,0 +1,20 @@
+version: v2
+
+# Generates the annotation schemas Protoform reads at runtime into lib/gen
+# (shipped as @dtkt/protoform/gen/*, like @bufbuild/protovalidate/gen).
+clean: true
+inputs:
+  - module: buf.build/datakit-dev/dtkt-sdk
+    paths:
+      - dtkt/protoform
+  - module: buf.build/googleapis/googleapis
+    paths:
+      - google/api/field_behavior.proto
+plugins:
+  - remote: buf.build/bufbuild/es:v2.16.0
+    opt:
+      - target=js+dts
+      - valid_types=protovalidate_required
+      - map_imports=buf/validate/:@bufbuild/protovalidate/gen
+      - map_imports=google/protobuf/:@bufbuild/protobuf/wkt
+    out: lib/gen

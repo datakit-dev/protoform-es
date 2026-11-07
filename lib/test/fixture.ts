@@ -14,7 +14,7 @@ import {
   file_google_protobuf_wrappers,
 } from "@bufbuild/protobuf/wkt";
 
-import { field as fieldElement, FieldElementSchema } from "@buf/datakit-dev_dtkt-sdk.bufbuild_es/dtkt/protoform/v1beta1/protoform_pb";
+import { field as fieldElement, FieldElementSchema } from "../gen/dtkt/protoform/v1beta1/protoform_pb";
 import { field as fieldRules, FieldRulesSchema } from "@bufbuild/protovalidate/gen/buf/validate/validate_pb.js";
 
 import { Env } from "../env";

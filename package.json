@@ -2,6 +2,22 @@
   "name": "@dtkt/protoform",
   "version": "0.1.0",
   "description": "DataKit Protoform",
+  "keywords": [
+    "datakit",
+    "dtkt",
+    "protobuf",
+    "protoform",
+    "react",
+    "forms"
+  ],
+  "homepage": "https://github.com/datakit-dev/protoform-es",
+  "bugs": {
+    "url": "https://github.com/datakit-dev/protoform-es/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/datakit-dev/protoform-es.git"
+  },
   "type": "module",
   "main": "./dist/main.js",
   "module": "./dist/main.js",
@@ -33,6 +49,10 @@
       "types": "./dist/kit/tailwind/index.d.ts",
       "import": "./dist/kit/tailwind/index.js"
     },
+    "./gen/*.js": {
+      "types": "./dist/gen/*.d.ts",
+      "import": "./dist/gen/*.js"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
@@ -43,9 +63,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "gen": "buf generate",
+    "prepublishOnly": "npm run lint && npm test && npm run build"
   },
   "peerDependencies": {
+    "@bufbuild/protobuf": "^2.16.0",
+    "@bufbuild/protovalidate": "^1.3.0",
     "@headlessui/react": "^2.0.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
@@ -57,6 +81,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",
+    "@buf/datakit-dev_dtkt-sdk.bufbuild_es": "^2.16.0-20261027090458-7143679e943c.1",
+    "@bufbuild/protobuf": "^2.16.0",
+    "@bufbuild/protovalidate": "^1.3.0",
     "@eslint/js": "^10.0.1",
     "@headlessui/react": "^2.2.10",
     "@rolldown/plugin-babel": "^0.2.4",
@@ -87,10 +114,6 @@
     "vitest": "^5.0.5"
   },
   "dependencies": {
-    "@buf/datakit-dev_dtkt-sdk.bufbuild_es": "^2.16.0-20261027090458-7143679e943c.1",
-    "@buf/googleapis_googleapis.bufbuild_es": "^2.16.0-20261015202054-8ac61b9e5023.1",
-    "@bufbuild/protobuf": "^2.16.0",
-    "@bufbuild/protovalidate": "^1.3.0",
     "@connectrpc/connect": "^2.2.0",
     "@connectrpc/connect-web": "^2.2.0"
   },
@@ -109,5 +132,9 @@
         "./dist/kit/tailwind/index.d.ts"
       ]
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

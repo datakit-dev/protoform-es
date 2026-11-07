@@ -3,7 +3,7 @@
 // import { type DescMethodUnary, type Registry } from "@bufbuild/protobuf";
 // import { parsePath, reflect, type ReflectMessage } from "@bufbuild/protobuf/reflect";
 // import { useSuspenseQuery } from "@connectrpc/connect-query";
-// import { type SelectElement, type ValueAccessorValid } from "@dtkt/sdk/proto/dtkt/protoui/v1beta1/protoui_pb";
+// import { type SelectElement, type ValueAccessorValid } from "@buf/datakit-dev_dtkt-sdk.bufbuild_es/dtkt/protoui/v1beta1/protoui_pb";
 
 // type OptionsProps = {
 //   select: SelectElement;
